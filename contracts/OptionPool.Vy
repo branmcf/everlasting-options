@@ -3,6 +3,7 @@
 @notice A prototype implementation of Everlasting Options
 @author Brandon McFarland
 """
+
 # define the interfaces used by the contract
 
 # define the constants used by the contract
@@ -20,6 +21,7 @@ factory: address
 userBalances: public(HashMap[address, Account])
 shortLiquidity: public(uint256)
 longLiquidity: public(uint256)
+contractsAvailable: public(uint256)
 
 @external
 def __init__():
@@ -45,8 +47,18 @@ def _safeTransferFrom(
     if len(transferResponse) > 0:
         assert convert(transferResponse, bool), "Failed safeTransferFrom"
 
+@internal
+def _calculateSizeForAmount(_amount: uint256) -> uint256:
+    # TODO
+    return 0
+
+@internal
+def _calculateAmountForSize(_size: uint256) -> uint256:
+    # TODO
+    return 0
+
 @external
-def depositShort(_amount: uint256):
+def depositShort(_amount: uint256) -> bool:
 
     # transfer dai from the depositor to the pool
     self._safeTransferFrom(
@@ -61,3 +73,16 @@ def depositShort(_amount: uint256):
 
     # update total short liquidity
     self.shortLiquidity += _amount
+
+    # calculate short size
+    size: uint256 = self._calculateSizeForAmount(_amount)
+
+    # update user short size
+    self.userBalances[msg.sender].shortSize += size
+
+    # update total contracts available
+    self.contractsAvailable += size
+
+    # return true on successful deposit
+    return True
+
