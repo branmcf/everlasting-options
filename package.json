@@ -1,0 +1,22 @@
+{
+  "name": "everlasting-options-prototype",
+  "version": "1.0.0",
+  "description": "A prototype for everlasting options",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.2.6",
+    "dotenv": "^8.2.0",
+    "ganache-core": "^2.13.2",
+    "truffle-assertions": "^0.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ganache": "node scripts/ganache.js"
+  },
+  "author": "Brandon McFarland",
+  "license": ""
+}
