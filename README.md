@@ -1,4 +1,11 @@
 # Everlasting Options Prototype
+ <p align="center"> 
+    <img 
+        src="https://user-images.githubusercontent.com/8098163/119282447-b016a880-bc07-11eb-86ba-6ee503b40f2c.png" 
+        alt="everlasting put price chart" 
+        height="30%"
+        width="30%">
+ </p>
 
 ## Overview
 This is a prototype of a decentralized protocol for Everlasting Options, a new type of derivative created by [Dave White](https://twitter.com/_Dave__White_) and [Sam Bankman-Fried](https://twitter.com/SBF_Alameda). Everlasting options are designed to give traders long-term options exposure without the effort, risk, or expense of rolling positions. 
@@ -9,9 +16,28 @@ If you would like to read more about Everlasting Options the original paper is a
 
 ## Install Dependencies
 TODO
+```bash
+# clone the repo
+$ git clone https://github.com/branmcf/everlasting-options.git
+
+# move into the project directory
+$ cd everlasting-options
+
+# install truffle
+$ npm i -g truffle
+
+# create a virtualenv
+$ virtualenv -p /usr/bin/python3 vyper-latest
+
+# activate the venv
+$ source ~/vyper-latest/bin/activate
+
+# install vyper
+$ pip install vyper
+```
 
 ## Compile Contracts
-npm run compile
+`npm run compile`
 
 ## Run Tests
-npm run test
+`npm run test`
