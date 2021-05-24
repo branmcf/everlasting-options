@@ -61,5 +61,3 @@ def depositShort(_amount: uint256):
 
     # update total short liquidity
     self.shortLiquidity += _amount
-
-    # calculate how 
