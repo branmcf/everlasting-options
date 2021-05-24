@@ -18,13 +18,15 @@ struct Account:
 
 # define the storage variables used by the contract
 factory: address
+strike: uint256
 userBalances: public(HashMap[address, Account])
 shortLiquidity: public(uint256)
 longLiquidity: public(uint256)
 contractsAvailable: public(uint256)
 
 @external
-def __init__():
+def __init__(_strike: uint256):
+    self.strike = _strike
     self.factory = msg.sender
 
 @internal
@@ -57,6 +59,11 @@ def _calculateAmountForSize(_size: uint256) -> uint256:
     # TODO
     return 0
 
+@internal
+def _getMarkPrice() -> uint256:
+    # TODO
+    return 0
+
 @external
 def depositShort(_amount: uint256) -> bool:
 
@@ -86,3 +93,31 @@ def depositShort(_amount: uint256) -> bool:
     # return true on successful deposit
     return True
 
+@external
+def withdrawShort(_amount: uint256) -> bool:
+
+    # return true on successful withdraw
+    return True 
+
+@external
+def depositLong(_amount: uint256) -> bool:
+
+    # return true on successful deposit
+    return True
+
+@external
+def withdrawLong(_amount: uint256) -> bool:
+
+    # return true on successful withdraw
+    return True 
+
+@external
+def getMarkPrice() -> uint256:
+
+    # call internal getMarkPrice method
+    return self._getMarkPrice()
+
+@external
+def calculateFunding() -> uint256:
+
+    return 1
