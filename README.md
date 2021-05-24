@@ -3,8 +3,8 @@
     <img 
         src="https://user-images.githubusercontent.com/8098163/119282447-b016a880-bc07-11eb-86ba-6ee503b40f2c.png" 
         alt="everlasting put price chart" 
-        height="30%"
-        width="30%">
+        height="40%"
+        width="40%">
  </p>
 
 ## Overview
