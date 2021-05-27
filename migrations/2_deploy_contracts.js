@@ -1,8 +1,10 @@
+const { fromPairs } = require('lodash');
+
 // required packages
 require('dotenv').config();
 
 // contract artifacts
-const factory = artifacts.require("OptionFactory");
+// const factory = artifacts.require("OptionFactory");
 const pool = artifacts.require("OptionPool");
 
 
@@ -17,6 +19,14 @@ module.exports = async function(deployer, network, accounts) {
         // DO NOTHING
 
     } else if (network === 'development') {
+        // deployment constants
+        const strike = web3.utils.toWei('3000', 'ether')
+        const price = web3.utils.toWei('3000', 'ether')
+        const liquidity = web3.utils.toWei('1000', 'ether')
+
+        // deploy the OptionPool
+        await deployer.deploy(pool, {from: process.env.DEVELOPMENT_ADDRESS});
+
         // // deployment constants
         // const aaveV2LendingPoolAddress = '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9';
         // const aaveV2PriceFeedAddress = '0xa50ba011c48153de246e5192c8f9258a2ba79ca9';
