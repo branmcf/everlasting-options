@@ -6,7 +6,7 @@
 
 # define the interfaces used by the contract
 interface Exchange():
-    def setup(token_addr: address): nonpayable
+    def setup(_strike: uint256, _x_initial: uint256, _y_initial: uint256, _token: address, _contract_type: uint256, _funding_frequency: uint256): nonpayable
 
 # define the events emitted by the contract
 event NewExchange:
@@ -33,7 +33,7 @@ def __init__(_template: address):
     self.exchangeTemplate = _template
 
 @external
-def createExchange(_token: address, _strike: uint256, _contract_type: uint256) -> address:
+def createExchange(_strike: uint256, _x_initial: uint256, _y_initial: uint256, _token: address, _contract_type: uint256, _funding_frequency: uint256) -> address:
     assert _token != ZERO_ADDRESS
     assert _strike > 0
     assert _contract_type == 0 or _contract_type == 1
@@ -42,7 +42,7 @@ def createExchange(_token: address, _strike: uint256, _contract_type: uint256) -
 
     exchange: address = create_forwarder_to(self.exchangeTemplate)
     
-    Exchange(exchange).setup(_token)
+    Exchange(exchange).setup(_strike, _x_initial, _y_initial, _token, _contract_type, _funding_frequency)
 
     self.paramsToExchange[_token][_strike][_contract_type] = exchange
     self.exchangeToParams[exchange] = Params({

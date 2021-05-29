@@ -30,12 +30,13 @@ userAccounts: public(HashMap[address, Account])
 tokenPool: public(uint256)
 collateralPool: public(uint256)
 invariant: public(uint256)
-mark: public(uint256)
 token: public(address)
 contractType: public(uint256)
 priceCount: public(uint256)
 lastAveragePrice: public(uint256)
 fundingFrequency: public(uint256)
+maxMove: public(uint256)
+liquidatorBonus: public(uint256)
 
 @external
 def __init__():
@@ -54,17 +55,18 @@ def _calculateAveragePrice():
     self.lastAveragePrice = convert(convert(self.lastAveragePrice, int128) + differential, uint256)
 
 @external
-def setup(_strike: uint256, _x_initial: uint256, _y_initial: uint256, _token: address, _contract_type: uint256, _funding_frequency: uint256):
+def setup(_strike: uint256, _x_initial: uint256, _y_initial: uint256, _token: address, _contract_type: uint256, _funding_frequency: uint256, _max_move: uint256, _liquidator_bonus: uint256):
     assert msg.sender == self.factory, "Only the factory can call setup"
     assert self.isPoolSetup == False
     self.strike = _strike
     self.tokenPool = _x_initial
     self.collateralPool = _y_initial
     self.invariant = _x_initial * _y_initial
-    self.mark = _y_initial / _x_initial
     self.token = _token
     self.contractType = _contract_type
     self.fundingFrequency = _funding_frequency
+    self.maxMove = _max_move
+    self.liquidatorBonus = _liquidator_bonus
     self._calculateAveragePrice()
     self.isPoolSetup = True
 
@@ -108,6 +110,7 @@ def _safeTransfer(
 
 @internal
 def _getSpotPrice() -> uint256:
+    # TODO
     return 1
 
 @external
@@ -261,6 +264,7 @@ def getMarkPrice() -> uint256:
 
 @external
 def calculateFunding() -> uint256:
+    # TODO
 
     # check if the contract type is a call
     if self.contractType == 0:
@@ -274,10 +278,89 @@ def calculateFunding() -> uint256:
     elif self.contractType == 1:
         pass
     else:
-        raise "Invalid contract type"
+        raise "Invalid contract type for calculateFunding"
 
 
     return 1
+
+@internal
+def _liquidate() -> uint256:
+    # TODO
+
+    return 1
+
+@external
+def liquidate(_account: address, _amount: uint256, _side: uint256) -> uint256:
+    # assert _side == 0 or _side == 1
+    
+    # handle call liquidation
+    if self.contractType == 0:
+        spotPrice: uint256 = self._getSpotPrice()
+        payoff: uint256 = max(spotPrice - self.strike, 0)
+        mark: uint256 = self._getMarkPrice()
+
+        # handle long liquidation
+        if _side == 0:
+            maxMoveSpot: uint256 = spotPrice * (1 - 1 * self.maxMove)
+            maxMovePayoff: uint256 = max(maxMoveSpot - self.strike, 0)
+            timeValue: uint256 = max(mark - payoff, 0)
+            requiredBuffer: uint256 = timeValue + mark - maxMovePayoff
+
+            if self.userAccounts[msg.sender].reserves < requiredBuffer:
+                # liquidate
+                return self._liquidate()
+            else:
+                raise "This position can not be liquidated"
+
+        # handle short liquidation
+        elif _side == 1:
+            maxMoveSpot: uint256 = spotPrice * (1 + 1 * self.maxMove)
+            maxMovePayoff: uint256 = max(maxMoveSpot - self.strike, 0)
+            timeValue: uint256 = max(mark - payoff, 0)
+            requiredBuffer: uint256 = maxMovePayoff + timeValue * 10
+
+            if self.userAccounts[msg.sender].reserves < requiredBuffer:
+                # liquidate
+                return self._liquidate()
+            else:
+                raise "This position can not be liquidated"
+        else:
+            raise "Invalid side for liquidate"
+
+    # handle put liquidation
+    elif self.contractType == 1:
+        spotPrice: uint256 = self._getSpotPrice()
+        payoff: uint256 = max(self.strike - spotPrice, 0)
+        mark: uint256 = self._getMarkPrice()
+
+        # handle long liquidation
+        if _side == 0:
+            maxMoveSpot: uint256 = spotPrice * (1 + 1 * self.maxMove)
+            maxMovePayoff: uint256 = max(self.strike - maxMoveSpot, 0)
+            timeValue: uint256 = max(mark - payoff, 0)
+            requiredBuffer: uint256 = timeValue + mark - maxMovePayoff
+
+            if self.userAccounts[msg.sender].reserves < requiredBuffer:
+                # liquidate
+                return self._liquidate()
+            else:
+                raise "This position can not be liquidated"
+
+        elif _side == 1:
+            maxMoveSpot: uint256 = spotPrice * (1 - 1 * self.maxMove)
+            maxMovePayoff: uint256 = max(self.strike - maxMoveSpot, 0)
+            timeValue: uint256 = max(mark - payoff, 0)
+            requiredBuffer: uint256 = maxMovePayoff + timeValue * 10
+
+            if self.userAccounts[msg.sender].reserves < requiredBuffer:
+                # liquidate
+                return self._liquidate()
+            else:
+                raise "This position can not be liquidated"
+        else:
+            raise "Invalid side for liquidate"
+    else:
+        raise "Invalid contract for liquidate"
 
 @external
 def depositReserves(_amount: uint256):
@@ -290,8 +373,6 @@ def depositReserves(_amount: uint256):
     )
 
     self.userAccounts[msg.sender].reserves += _amount
-
-
 
 @external
 def withdrawReserves(_amount: uint256):

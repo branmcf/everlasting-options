@@ -29,10 +29,10 @@ contract("OptionPool Test Suite", async accounts => {
         const initial_tokenPool = await pool.tokenPool.call()
         const initial_collateralPool = await pool.collateralPool.call() 
         const initial_invariant = await pool.invariant.call()
-        const initial_mark = await pool.mark.call()
         const initial_token = await pool.token.call()
         const initial_contractType = await pool.contractType.call()
         const initial_fundingFrequency = await pool.fundingFrequency.call()
+        const initial_maxMove = await pool.maxMove.call()
         const initial_lastAveragePrice = await pool.lastAveragePrice.call()
         const initial_isPoolSetUp = await pool.isPoolSetup.call()
 
@@ -42,10 +42,10 @@ contract("OptionPool Test Suite", async accounts => {
         logger(`Initial tokenPool:        ${initial_tokenPool}`)
         logger(`Initial collateralPool:   ${initial_collateralPool}`)
         logger(`Initial invariant:        ${initial_invariant}`)
-        logger(`Initial mark:             ${initial_mark}`)
         logger(`Initial token:            ${initial_token}`)
         logger(`Initial contractType:     ${initial_contractType}`)
         logger(`Initial fundingFrequency: ${initial_fundingFrequency}`)
+        logger(`Initial maxMove:          ${initial_maxMove}`)
         logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
         logger(`Initial isPoolSetup:      ${initial_isPoolSetUp}`)
         logger(``);
@@ -72,10 +72,10 @@ contract("OptionPool Test Suite", async accounts => {
         const final_tokenPool = await pool.tokenPool.call()
         const final_collateralPool = await pool.collateralPool.call() 
         const final_invariant = await pool.invariant.call()
-        const final_mark = await pool.mark.call()
         const final_token = await pool.token.call()
         const final_contractType = await pool.contractType.call()
         const final_fundingFrequency = await pool.fundingFrequency.call()
+        const final_maxMove = await pool.maxMove.call()
         const final_lastAveragePrice = await pool.lastAveragePrice.call()
         const final_isPoolSetUp = await pool.isPoolSetup.call()
 
@@ -85,10 +85,10 @@ contract("OptionPool Test Suite", async accounts => {
         logger(`Final tokenPool:        ${final_tokenPool}`)
         logger(`Final collateralPool:   ${final_collateralPool}`)
         logger(`Final invariant:        ${final_invariant}`)
-        logger(`Final mark:             ${final_mark}`)
         logger(`Final token:            ${final_token}`)
         logger(`Final contractType:     ${final_contractType}`)
         logger(`Final fundingFrequency: ${final_fundingFrequency}`)
+        logger(`Final maxMove:          ${final_maxMove}`)
         logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
         logger(`Final isPoolSetup:      ${final_isPoolSetUp}`)
         logger(``);
@@ -157,187 +157,187 @@ contract("OptionPool Test Suite", async accounts => {
 
     });
 
-    // it("should successfully call depositLong", async () => {
+    it("should successfully call depositLong", async () => {
 
-    //     // get initial values
-    //     const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const initial_collateralPool = await pool.collateralPool.call() 
-    //     const initial_tokenPool = await pool.tokenPool.call()
-    //     const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const initial_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get initial values
+        const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const initial_collateralPool = await pool.collateralPool.call() 
+        const initial_tokenPool = await pool.tokenPool.call()
+        const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const initial_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`================================================================================`);
-    //     logger(``);
-    //     logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
-    //     logger(`Initial collateralPool:   ${initial_collateralPool}`)
-    //     logger(`Initial tokenPool:        ${initial_tokenPool}`)
-    //     logger(`Initial longDeposits:     ${initial_account.longDeposits}`)
-    //     logger(`Initial longSize:         ${initial_account.longSize}`)
-    //     logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
-    //     logger(``);
+        logger(`================================================================================`);
+        logger(``);
+        logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
+        logger(`Initial collateralPool:   ${initial_collateralPool}`)
+        logger(`Initial tokenPool:        ${initial_tokenPool}`)
+        logger(`Initial longDeposits:     ${initial_account.longDeposits}`)
+        logger(`Initial longSize:         ${initial_account.longSize}`)
+        logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
+        logger(``);
 
-    //     const depositAmount = web3.utils.toWei('10', 'ether')
+        const depositAmount = web3.utils.toWei('10', 'ether')
 
-    //     await pool.depositLong(
-    //         depositAmount,
-    //         {from: process.env.DEVELOPMENT_ADDRESS}
-    //     );
+        await pool.depositLong(
+            depositAmount,
+            {from: process.env.DEVELOPMENT_ADDRESS}
+        );
 
-    //     // get final values
-    //     const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const final_collateralPool = await pool.collateralPool.call() 
-    //     const final_tokenPool = await pool.tokenPool.call()
-    //     const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const final_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get final values
+        const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const final_collateralPool = await pool.collateralPool.call() 
+        const final_tokenPool = await pool.tokenPool.call()
+        const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const final_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`----------------------------------------`);
-    //     logger(``);
-    //     logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
-    //     logger(`Final collateralPool:   ${final_collateralPool}`)
-    //     logger(`Final tokenPool:        ${final_tokenPool}`)
-    //     logger(`Final longDeposits:     ${final_account.longDeposits}`)
-    //     logger(`Final longSize:         ${final_account.longSize}`)
-    //     logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
-    //     logger(``);
+        logger(`----------------------------------------`);
+        logger(``);
+        logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
+        logger(`Final collateralPool:   ${final_collateralPool}`)
+        logger(`Final tokenPool:        ${final_tokenPool}`)
+        logger(`Final longDeposits:     ${final_account.longDeposits}`)
+        logger(`Final longSize:         ${final_account.longSize}`)
+        logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
+        logger(``);
 
-    // });
+    });
 
-    // it("should successfully call depositShort", async () => {
+    it("should successfully call depositShort", async () => {
 
-    //     // get initial values
-    //     const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const initial_collateralPool = await pool.collateralPool.call() 
-    //     const initial_tokenPool = await pool.tokenPool.call()
-    //     const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const initial_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get initial values
+        const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const initial_collateralPool = await pool.collateralPool.call() 
+        const initial_tokenPool = await pool.tokenPool.call()
+        const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const initial_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`================================================================================`);
-    //     logger(``);
-    //     logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
-    //     logger(`Initial collateralPool:   ${initial_collateralPool}`)
-    //     logger(`Initial tokenPool:        ${initial_tokenPool}`)
-    //     logger(`Initial shortDeposits:    ${initial_account.shortDeposits}`)
-    //     logger(`Initial shortSize:        ${initial_account.shortSize}`)
-    //     logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
-    //     logger(``);
+        logger(`================================================================================`);
+        logger(``);
+        logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
+        logger(`Initial collateralPool:   ${initial_collateralPool}`)
+        logger(`Initial tokenPool:        ${initial_tokenPool}`)
+        logger(`Initial shortDeposits:    ${initial_account.shortDeposits}`)
+        logger(`Initial shortSize:        ${initial_account.shortSize}`)
+        logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
+        logger(``);
 
-    //     const depositAmount = web3.utils.toWei('20', 'ether')
+        const depositAmount = web3.utils.toWei('20', 'ether')
 
-    //     await pool.depositShort(
-    //         depositAmount,
-    //         {from: process.env.DEVELOPMENT_ADDRESS}
-    //     );
+        await pool.depositShort(
+            depositAmount,
+            {from: process.env.DEVELOPMENT_ADDRESS}
+        );
 
-    //     // get final values
-    //     const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const final_collateralPool = await pool.collateralPool.call() 
-    //     const final_tokenPool = await pool.tokenPool.call()
-    //     const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const final_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get final values
+        const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const final_collateralPool = await pool.collateralPool.call() 
+        const final_tokenPool = await pool.tokenPool.call()
+        const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const final_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`----------------------------------------`);
-    //     logger(``);
-    //     logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
-    //     logger(`Final collateralPool:   ${final_collateralPool}`)
-    //     logger(`Final tokenPool:        ${final_tokenPool}`)
-    //     logger(`Final shortDeposits:    ${final_account.shortDeposits}`)
-    //     logger(`Final shortSize:        ${final_account.shortSize}`)
-    //     logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
-    //     logger(``);
+        logger(`----------------------------------------`);
+        logger(``);
+        logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
+        logger(`Final collateralPool:   ${final_collateralPool}`)
+        logger(`Final tokenPool:        ${final_tokenPool}`)
+        logger(`Final shortDeposits:    ${final_account.shortDeposits}`)
+        logger(`Final shortSize:        ${final_account.shortSize}`)
+        logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
+        logger(``);
 
-    // });
+    });
 
-    // it("should successfully call withdrawLong", async () => {
+    it("should successfully call withdrawLong", async () => {
 
-    //     // get initial values
-    //     const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const initial_collateralPool = await pool.collateralPool.call() 
-    //     const initial_tokenPool = await pool.tokenPool.call()
-    //     const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const initial_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get initial values
+        const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const initial_collateralPool = await pool.collateralPool.call() 
+        const initial_tokenPool = await pool.tokenPool.call()
+        const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const initial_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`================================================================================`);
-    //     logger(``);
-    //     logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
-    //     logger(`Initial collateralPool:   ${initial_collateralPool}`)
-    //     logger(`Initial tokenPool:        ${initial_tokenPool}`)
-    //     logger(`Initial longDeposits:     ${initial_account.longDeposits}`)
-    //     logger(`Initial longSize:         ${initial_account.longSize}`)
-    //     logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
-    //     logger(``);
+        logger(`================================================================================`);
+        logger(``);
+        logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
+        logger(`Initial collateralPool:   ${initial_collateralPool}`)
+        logger(`Initial tokenPool:        ${initial_tokenPool}`)
+        logger(`Initial longDeposits:     ${initial_account.longDeposits}`)
+        logger(`Initial longSize:         ${initial_account.longSize}`)
+        logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
+        logger(``);
 
-    //     // const withdrawAmount = web3.utils.toWei('0.9', 'ether')
-    //     const withdrawAmount = '99009900990099010'
+        // const withdrawAmount = web3.utils.toWei('0.9', 'ether')
+        const withdrawAmount = '99009900990099010'
 
-    //     await pool.withdrawLong(
-    //         withdrawAmount,
-    //         {from: process.env.DEVELOPMENT_ADDRESS}
-    //     );
+        await pool.withdrawLong(
+            withdrawAmount,
+            {from: process.env.DEVELOPMENT_ADDRESS}
+        );
 
-    //     // get final values
-    //     const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const final_collateralPool = await pool.collateralPool.call() 
-    //     const final_tokenPool = await pool.tokenPool.call()
-    //     const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const final_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get final values
+        const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const final_collateralPool = await pool.collateralPool.call() 
+        const final_tokenPool = await pool.tokenPool.call()
+        const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const final_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`----------------------------------------`);
-    //     logger(``);
-    //     logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
-    //     logger(`Final collateralPool:   ${final_collateralPool}`)
-    //     logger(`Final tokenPool:        ${final_tokenPool}`)
-    //     logger(`Final longDeposits:     ${final_account.longDeposits}`)
-    //     logger(`Final longSize:         ${final_account.longSize}`)
-    //     logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
-    //     logger(``);
+        logger(`----------------------------------------`);
+        logger(``);
+        logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
+        logger(`Final collateralPool:   ${final_collateralPool}`)
+        logger(`Final tokenPool:        ${final_tokenPool}`)
+        logger(`Final longDeposits:     ${final_account.longDeposits}`)
+        logger(`Final longSize:         ${final_account.longSize}`)
+        logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
+        logger(``);
 
-    // });
+    });
 
-    // it("should successfully call withdrawShort", async () => {
+    it("should successfully call withdrawShort", async () => {
 
-    //     // get initial values
-    //     const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const initial_collateralPool = await pool.collateralPool.call() 
-    //     const initial_tokenPool = await pool.tokenPool.call()
-    //     const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const initial_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get initial values
+        const initial_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const initial_collateralPool = await pool.collateralPool.call() 
+        const initial_tokenPool = await pool.tokenPool.call()
+        const initial_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const initial_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`================================================================================`);
-    //     logger(``);
-    //     logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
-    //     logger(`Initial collateralPool:   ${initial_collateralPool}`)
-    //     logger(`Initial tokenPool:        ${initial_tokenPool}`)
-    //     logger(`Initial shortDeposits:    ${initial_account.shortDeposits}`)
-    //     logger(`Initial shortSize:        ${initial_account.shortSize}`)
-    //     logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
-    //     logger(``);
+        logger(`================================================================================`);
+        logger(``);
+        logger(`Initial exchangeBalance:  ${initial_exchangeBalance}`)
+        logger(`Initial collateralPool:   ${initial_collateralPool}`)
+        logger(`Initial tokenPool:        ${initial_tokenPool}`)
+        logger(`Initial shortDeposits:    ${initial_account.shortDeposits}`)
+        logger(`Initial shortSize:        ${initial_account.shortSize}`)
+        logger(`Initial lastAveragePrice: ${initial_lastAveragePrice}`)
+        logger(``);
 
-    //     // const depositAmount = web3.utils.toWei('20', 'ether')
-    //     const withdrawAmount = '200020002000200020'
+        // const depositAmount = web3.utils.toWei('20', 'ether')
+        const withdrawAmount = '200020002000200020'
 
-    //     await pool.withdrawShort(
-    //         withdrawAmount,
-    //         {from: process.env.DEVELOPMENT_ADDRESS}
-    //     );
+        await pool.withdrawShort(
+            withdrawAmount,
+            {from: process.env.DEVELOPMENT_ADDRESS}
+        );
 
-    //     // get final values
-    //     const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
-    //     const final_collateralPool = await pool.collateralPool.call() 
-    //     const final_tokenPool = await pool.tokenPool.call()
-    //     const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
-    //     const final_lastAveragePrice = await pool.lastAveragePrice.call()
+        // get final values
+        const final_exchangeBalance = await dai.methods.balanceOf(pool.address).call()
+        const final_collateralPool = await pool.collateralPool.call() 
+        const final_tokenPool = await pool.tokenPool.call()
+        const final_account = await pool.userAccounts.call(process.env.DEVELOPMENT_ADDRESS)
+        const final_lastAveragePrice = await pool.lastAveragePrice.call()
 
-    //     logger(`----------------------------------------`);
-    //     logger(``);
-    //     logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
-    //     logger(`Final collateralPool:   ${final_collateralPool}`)
-    //     logger(`Final tokenPool:        ${final_tokenPool}`)
-    //     logger(`Final shortDeposits:    ${final_account.shortDeposits}`)
-    //     logger(`Final shortSize:        ${final_account.shortSize}`)
-    //     logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
-    //     logger(``);
+        logger(`----------------------------------------`);
+        logger(``);
+        logger(`Final exchangeBalance:  ${final_exchangeBalance}`)
+        logger(`Final collateralPool:   ${final_collateralPool}`)
+        logger(`Final tokenPool:        ${final_tokenPool}`)
+        logger(`Final shortDeposits:    ${final_account.shortDeposits}`)
+        logger(`Final shortSize:        ${final_account.shortSize}`)
+        logger(`Final lastAveragePrice: ${final_lastAveragePrice}`)
+        logger(``);
 
-    // });
+    });
 
     
     
